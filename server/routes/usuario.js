@@ -8,26 +8,28 @@ const app = express();
 /** Index */
 app.get('/usuario', (req, res) => {
 
-    let desde = req.query.desde || 0;
-    let limite = req.query.limite || 5;
+    res.json({ ok: true, db: `${process.env.URLDB}` });
 
-    desde = Number(desde);
-    limite = Number(limite);
+    // let desde = req.query.desde || 0;
+    // let limite = req.query.limite || 5;
 
-    /** Filtros */
-    let filter = { estado: true };
-    /** Retorna todos los datos */
-    User.find(filter, 'nombre email role estado google img')
-        .skip(desde) // salta a los siguientes 5 registros
-        .limit(limite) // presenta de a 5 registros
-        .exec((err, usersFind) => {
-            if (err)
-                return res.status(400).json({ ok: false, msg: err.message });
+    // desde = Number(desde);
+    // limite = Number(limite);
 
-            User.count(filter, (err, total) => {
-                res.json({ ok: true, totalReg: total, users: usersFind });
-            })
-        });
+    // /** Filtros */
+    // let filter = { estado: true };
+    // /** Retorna todos los datos */
+    // User.find(filter, 'nombre email role estado google img')
+    //     .skip(desde) // salta a los siguientes 5 registros
+    //     .limit(limite) // presenta de a 5 registros
+    //     .exec((err, usersFind) => {
+    //         if (err)
+    //             return res.status(400).json({ ok: false, msg: err.message });
+
+    //         User.count(filter, (err, total) => {
+    //             res.json({ ok: true, totalReg: total, users: usersFind });
+    //         })
+    //     });
 });
 
 app.post('/usuario', (req, res) => {
