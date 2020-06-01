@@ -17,8 +17,12 @@ app.use(require('./routes/usuario.js'));
 /** Conectamos a la DB */
 opt = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true };
 mongoose.connect(process.env.URLDB, opt, (err, res) => {
-    if (err) throw err;
-    console.log('Base de datos: online');
+    if (err) {
+        console.log(`problemas con la conexión: ${process.env.URLDB}`);
+        return;
+    } else {
+        console.log('Base de datos: online');
+    }
 });
 
 app.listen(process.env.PORT, () => {
