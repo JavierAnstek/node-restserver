@@ -9,6 +9,18 @@ process.env.PORT = process.env.PORT || 3000;
 process.env.NODE_ENV = process.env.NODE_ENV || 'dev';
 
 /*********************************
+ *         SECRET KEY
+ ********************************/
+process.env.SECRET_TOKEN = process.env.SECRET_TOKEN || 'secretdevtoken';
+
+/*********************************
+ *        TOKEN EXPIRE
+ ********************************/
+//seg * min * hor * diaS: ej 30 dias, 60*60*24*30 
+process.env.EXPIRE_TOKEN = 60 * 60 * 24 * 30;
+
+
+/*********************************
  *        BASE DE DATOS
  ********************************/
 let urlDB;

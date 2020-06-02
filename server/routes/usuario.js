@@ -3,12 +3,16 @@ const express = require('express');
 const bcrypt = require('bcrypt');
 const _ = require('underscore');
 const User = require('../models/usuario');
+const { verifyToken, verifyAdminRole } = require('../middlewares/authentication');
+
 const app = express();
 
 /** Index */
-app.get('/usuario', (req, res) => {
+app.get('/usuario', verifyToken, (req, res) => {
 
-    // res.json({ ok: true, db: `${process.env.URLDB}` });
+    /** Tomar datos del payload, usuario lo creo el middleware */
+    let usuario = req.usuario;
+
 
     let desde = req.query.desde || 0;
     let limite = req.query.limite || 5;
@@ -32,12 +36,12 @@ app.get('/usuario', (req, res) => {
         });
 });
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', [verifyToken, verifyAdminRole], (req, res) => {
     /** Obtiene el request */
     let body = req.body;
 
     /** Crea el usuario */
-    let usuario = new User({
+    let user = new User({
         nombre: body.nombre,
         email: body.email,
         password: bcrypt.hashSync(body.password, 10),
@@ -45,22 +49,24 @@ app.post('/usuario', (req, res) => {
     });
 
     /** guardamos en la DB */
-    usuario.save((err, userSave) => {
+    user.save((err, userSave) => {
         if (err)
             return res.status(400).json({ ok: false, msg: err.message });
 
-        res.json({ ok: true, usuario: userSave });
+        res.json({ ok: true, user: userSave });
     });
 });
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', [verifyToken, verifyAdminRole], (req, res) => {
     let id = req.params.id;
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
     /** Buscamos el usuario */
     User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, userUPD) => {
         if (err)
-            return res.status(400).json({ ok: false, msg: err.message });
+            return res.status(500).json({ ok: false, msg: err.message });
+        if (!userUPD)
+            return res.status(401).json({ ok: false, msg: 'No se encontró registro' });
 
         res.json({ ok: true, usuario: userUPD });
     });
@@ -68,7 +74,7 @@ app.put('/usuario/:id', (req, res) => {
     //res.json(`Hola en put ${req.params.id}`);
 });
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', [verifyToken, verifyAdminRole], (req, res) => {
     let id = req.params.id;
 
     /** Borra el registro fisicamente */
@@ -87,6 +93,8 @@ app.delete('/usuario/:id', (req, res) => {
     User.findByIdAndUpdate(id, softDel, { new: true }, (err, userSoftDel) => {
         if (err)
             return res.status(400).json({ ok: false, msg: err.message });
+        if (!userSoftDel)
+            return res.status(401).json({ ok: false, msg: 'No se encontró registro' });
 
         res.json({ ok: true, usuario: userSoftDel });
     });

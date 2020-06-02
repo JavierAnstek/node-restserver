@@ -9,11 +9,15 @@ const bodyParser = require('body-parser');
 /** MIDDLEWARES */
 // parse applications/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
+
 // parse application/json
 app.use(bodyParser.json());
-// Importa las rutas
-app.use(require('./routes/usuario.js'));
 
+// Importa las rutas
+app.use(require('./routes/index'));
+
+
+/** CONFIGURACIÓN DB */
 /** Conectamos a la DB */
 opt = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true };
 mongoose.connect(process.env.URLDB, opt, (err, res) => {
