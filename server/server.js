@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(require('./routes/index'));
 
 
-app.get('/', (req, res) => {
+app.get('/googlec03814beacb7b1b3.html', (req, res) => {
     res.sendFile('googlec03814beacb7b1b3.html', { root: __dirname });
 });
 
