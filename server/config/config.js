@@ -19,6 +19,10 @@ process.env.SECRET_TOKEN = process.env.SECRET_TOKEN || 'secretdevtoken';
 //seg * min * hor * diaS: ej 30 dias, 60*60*24*30 
 process.env.EXPIRE_TOKEN = 60 * 60 * 24 * 30;
 
+/*********************************
+ *      GOOGLE CLIENT
+ ********************************/
+process.env.ID_CLIENT_GOOGLE = process.env.ID_CLIENT_GOOGLE || '421640639035-afadtbm6kh4bnr52iooj06lcjdh1epg1.apps.googleusercontent.com';
 
 /*********************************
  *        BASE DE DATOS

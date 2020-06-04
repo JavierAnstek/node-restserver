@@ -1,13 +1,12 @@
 require('./config/config');
 const express = require('express');
 const mongoose = require('mongoose');
+const path = require('path');
 const app = express();
 /** Para recibir info de los forms */
 const bodyParser = require('body-parser');
 
 /** MIDDLEWARES */
-/** Contenido estatico */
-// app.use(express.static(__dirname + '/public'));
 
 // parse applications/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -15,10 +14,13 @@ app.use(bodyParser.urlencoded({ extended: false }));
 // parse application/json
 app.use(bodyParser.json());
 
+/** Contenido estatico */
+app.use(express.static(path.resolve(__dirname, '../public')));
+
 // Importa las rutas
 app.use(require('./routes/index'));
 
-
+/** Validador de servidor con google Oauth */
 app.get('/googlec03814beacb7b1b3.html', (req, res) => {
     res.sendFile('googlec03814beacb7b1b3.html', { root: __dirname });
 });
