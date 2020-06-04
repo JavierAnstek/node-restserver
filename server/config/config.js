@@ -22,7 +22,7 @@ process.env.EXPIRE_TOKEN = 60 * 60 * 24 * 30;
 /*********************************
  *      GOOGLE CLIENT
  ********************************/
-process.env.ID_CLIENT_GOOGLE = process.env.ID_CLIENT_GOOGLE || '421640639035-afadtbm6kh4bnr52iooj06lcjdh1epg1.apps.googleusercontent.com';
+process.env.ID_CLIENT_GOOGLE = process.env.ID_CLIENT_GOOGLE || 'IDCLIENT';
 
 /*********************************
  *        BASE DE DATOS
