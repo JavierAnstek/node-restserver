@@ -62,7 +62,7 @@ app.put('/usuario/:id', [verifyToken, verifyAdminRole], (req, res) => {
     let body = _.pick(req.body, ['nombre', 'email', 'img', 'role', 'estado']);
 
     /** Buscamos el usuario */
-    User.findByIdAndUpdate(id, body, { new: true, runValidators: true }, (err, userUPD) => {
+    User.findByIdAndUpdate(id, body, { new: true, runValidators: true, context: 'query' }, (err, userUPD) => {
         if (err)
             return res.status(500).json({ ok: false, msg: err.message });
         if (!userUPD)
@@ -70,8 +70,6 @@ app.put('/usuario/:id', [verifyToken, verifyAdminRole], (req, res) => {
 
         res.json({ ok: true, usuario: userUPD });
     });
-
-    //res.json(`Hola en put ${req.params.id}`);
 });
 
 app.delete('/usuario/:id', [verifyToken, verifyAdminRole], (req, res) => {

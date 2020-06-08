@@ -26,7 +26,7 @@ app.get('/googlec03814beacb7b1b3.html', (req, res) => {
 });
 
 /** CONFIGURACIÓN DB */
-/** Conectamos a la DB */
+/** Conectamos a la DB 'useFindAndModify', false */
 opt = { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true };
 mongoose.connect(process.env.URLDB, opt, (err, res) => {
     if (err) {

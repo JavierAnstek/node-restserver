@@ -17,7 +17,7 @@ process.env.SECRET_TOKEN = process.env.SECRET_TOKEN || 'secretdevtoken';
  *        TOKEN EXPIRE
  ********************************/
 //seg * min * hor * diaS: ej 30 dias, 60*60*24*30 
-process.env.EXPIRE_TOKEN = 60 * 60 * 24 * 30;
+process.env.EXPIRE_TOKEN = '48h';
 
 /*********************************
  *      GOOGLE CLIENT
