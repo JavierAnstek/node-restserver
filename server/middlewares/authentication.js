@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
  ********************************/
 // next continual con el programa
 let verifyToken = (req, res, next) => {
-    /** Así lee el token del request */
+    /** Así lee el token del request proveniente del header */
     let token = req.get('authorization');
 
     /** validamos el token */
@@ -30,4 +30,20 @@ let verifyAdminRole = (req, res, next) => {
     next();
 };
 
-module.exports = { verifyToken, verifyAdminRole };
+/*********************************
+ *        VERIICA TOKEN URL
+ ********************************/
+let verifyTokenUrl = (req, res, next) => {
+    /** Así lee el token del url */
+    let token = req.query.token;
+    /** validamos el token */
+    jwt.verify(token, process.env.SECRET_TOKEN, (err, decoded) => {
+        if (err)
+            return res.status(401).json({ ok: false, err: { message: 'Token no valido' } });
+
+        req.usuario = decoded.usuario;
+        next();
+    });
+};
+
+module.exports = { verifyToken, verifyAdminRole, verifyTokenUrl };
